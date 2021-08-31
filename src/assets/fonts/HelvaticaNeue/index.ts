@@ -1,0 +1,5 @@
+export const HBold = require('./assets/fonts/HelvaticaNeue/HelveticaNeue-Bold.otf')
+export const HCondBold = require('./assets/fonts/HelvaticaNeue/HelveticaNeue-CondensedBold.otf')
+export const HLight = require('./assets/fonts/HelvaticaNeue/HelveticaNeue-Light.otf')
+export const HMedium = require('./assets/fonts/HelvaticaNeue/HelveticaNeue-Medium.otf')
+export const HNormal = require('./assets/fonts/HelvaticaNeue/HelveticaNeue.otf')

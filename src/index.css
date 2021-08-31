@@ -1,0 +1,57 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Segoe UI',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--light) !important;
+  background-image: url('./assets/circles.svg');
+  background-repeat: no-repeat;
+  background-position-x: 130%;
+  background-position-y: -260px;
+  background-attachment: fixed;
+  background-size: 40%;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* The Helvetica Fonts */
+
+@font-face {
+  font-family: "HelveticaNeue";
+  src: local("HelveticaNeue"),
+   url("./assets/fonts/HelvaticaNeue/HelveticaNeue.otf") format("opentype");
+  font-weight:400
+}
+
+@font-face {
+  font-family: "HelveticaNeue";
+  src: local("HelveticaNeue"),
+   url("./assets/fonts/HelvaticaNeue/HelveticaNeue-Bold.otf") format("opentype");
+  font-weight: 900;
+}
+
+@font-face {
+  font-family: "HelveticaNeue";
+  src: local("HelveticaNeue"),
+   url("./assets/fonts/HelvaticaNeue/HelveticaNeue-CondensedBold.otf") format("opentype");
+  font-weight:600;
+}
+
+@font-face {
+  font-family: "HelveticaNeue";
+  src: local("HelveticaNeue"),
+   url("./assets/fonts/HelvaticaNeue/HelveticaNeue-Light.otf") format("opentype");
+  font-weight:300
+}
+
+@font-face {
+  font-family: "HelveticaNeue";
+  src: local("HelveticaNeue"),
+   url("./assets/fonts/HelvaticaNeue/HelveticaNeue-Medium.otf") format("opentype");
+  font-weight:500
+}
