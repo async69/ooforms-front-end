@@ -1,9 +1,9 @@
-import exportFromJSON from "export-from-json";
 import React, { useState } from "react";
-import { Button, Table } from "react-bootstrap";
+import { Button, FormControl, FormGroup, Row, Table } from "react-bootstrap";
+import { rows, data, SSD } from "./data";
 import { FetchWithFilters, IContentDoc } from "./actions";
 import { IResult } from "./constants/interfaces";
-import { rows } from "./data";
+import exportFromJSON from "export-from-json";
 
 export default () => {
   const [state, setState] = useState({
@@ -66,99 +66,105 @@ export default () => {
 
   return (
     <body>
-      <div>
-        <label>Date Range</label>
-        <input
-          placeholder="Start Date"
-          type="date"
-          onChange={({ currentTarget: { value } }) =>
-            setState({ ...state, startDate: value })
-          }
-        />
-        <input
-          placeholder="End Date"
-          type="date"
-          onChange={({ currentTarget: { value } }) =>
-            setState({ ...state, endDate: value })
-          }
-        />
+      <div className="filterOptions">
+        <div>
+          <label>Date Range</label>
+          <div>
+            <input
+              placeholder="Start Date"
+              type="date"
+              onChange={({ currentTarget: { value } }) =>
+                setState({ ...state, startDate: value })
+              }
+            />
+            <input
+              placeholder="End Date"
+              type="date"
+              onChange={({ currentTarget: { value } }) =>
+                setState({ ...state, endDate: value })
+              }
+            />
+          </div>
+        </div>
+        <div>
+          <label>NBR_POWER_UNIT</label>
+          <input
+            type="number"
+            onChange={({ currentTarget: { value } }) =>
+              setState({ ...state, NBR_POWER_UNIT: Number(value) })
+            }
+          />
+        </div>
+        <div>
+          <label>DRIVER_TOTAL</label>
+          <input
+            type="number"
+            onChange={({ currentTarget: { value } }) =>
+              setState({ ...state, DRIVER_TOTAL: Number(value) })
+            }
+          />
+        </div>
+        <div>
+          <label>PHY_STATE</label>
+          <input
+            onChange={({ currentTarget: { value } }) =>
+              setState({ ...state, PHY_STATE: value })
+            }
+          />
+        </div>
+        <div>
+          <label>PC_FLAG</label>
+          <input
+            onChange={({ currentTarget: { value } }) =>
+              setState({ ...state, PC_FLAG: value })
+            }
+          />
+        </div>
+        <div>
+          <label>CARRIER_OPERATION</label>
+          <input
+            onChange={({ currentTarget: { value } }) =>
+              setState({ ...state, CARRIER_OPERATION: value })
+            }
+          />
+        </div>
       </div>
-      <div>
-        <label>NBR_POWER_UNIT</label>
-        <input
-          type="number"
-          onChange={({ currentTarget: { value } }) =>
-            setState({ ...state, NBR_POWER_UNIT: Number(value) })
-          }
-        />
-      </div>
-      <div>
-        <label>DRIVER_TOTAL</label>
-        <input
-          type="number"
-          onChange={({ currentTarget: { value } }) =>
-            setState({ ...state, DRIVER_TOTAL: Number(value) })
-          }
-        />
-      </div>
-      <div>
-        <label>PHY_STATE</label>
-        <input
-          onChange={({ currentTarget: { value } }) =>
-            setState({ ...state, PHY_STATE: value })
-          }
-        />
-      </div>
-      <div>
-        <label>PC_FLAG</label>
-        <input
-          onChange={({ currentTarget: { value } }) =>
-            setState({ ...state, PC_FLAG: value })
-          }
-        />
-      </div>
-      <div>
-        <label>CARRIER_OPERATION</label>
-        <input
-          onChange={({ currentTarget: { value } }) =>
-            setState({ ...state, CARRIER_OPERATION: value })
-          }
-        />
-      </div>
-      <div>
-        <Button onClick={handleSubmit}>Search</Button>
-      </div>
-      <div>
-        <Button>Previous</Button>
-        <Button>Next</Button>
-      </div>
-      <div>
-        <Button onClick={exlHandler}>Export to Excel</Button>
-        <Button onClick={csvHandler}>Export to CSV</Button>
+      <hr />
+      <div className="filterButtons">
+        <div>
+          <button onClick={handleSubmit}>Search</button>
+        </div>
+        <div>
+          <button onClick={exlHandler}>Export to Excel</button>
+          <button onClick={csvHandler}>Export to CSV</button>
+        </div>
       </div>
 
-      <Table>
-        <thead>
-          <tr>
-            {rows.map((item) => (
-              <td style={{ paddingRight: 50, paddingLeft: 50, width: 100 }}>
-                <strong>{item}</strong>
-              </td>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {responseData.map((item) => (
+      <div className="results">
+        <table>
+          <thead>
             <tr>
-              {Object.values(item).map((itemName) => (
-                <td style={{ paddingRight: 50, paddingLeft: 50, width: 100 }}>
-                  {itemName}
+              {rows.map((item) => (
+                <td>
+                  <strong>{item}</strong>
                 </td>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {responseData.map((item) => (
+              <tr>
+                {Object.values(item).map((itemName) => (
+                  <td>{itemName}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="paginationButtons">
+        <button>Previous</button> <button>Next</button>
+      </div>
     </body>
   );
 };
