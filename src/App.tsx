@@ -71,7 +71,8 @@ export default () => {
         <Button onClick={handleSubmit}>Search</Button>
       </div>
       <div>
-        <Button>Previous</Button> <Button>Next</Button>
+        <Button>Previous</Button>
+        <Button>Next</Button>
       </div>
       <div>
         <Button onClick={exlHandler}>Export to Excel</Button>
