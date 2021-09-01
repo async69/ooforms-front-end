@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, FormControl, FormGroup, Row, Table } from "react-bootstrap";
 import { rows, data, SSD } from "./data";
 import { FetchWithFilters, IContentDoc } from "./actions";
@@ -17,6 +17,9 @@ export default () => {
   });
   const [PAGE_NUMBER, setPageNumber] = useState(1);
   const [responseData, setResponseData] = useState<IContentDoc[]>([]);
+  const [displayData, setDisplayData] = useState<IContentDoc[]>([]);
+  const [loader, setLoader] = useState<boolean>(false);
+
   const handleSubmit = () => {
     const {
       CARRIER_OPERATION,
@@ -27,6 +30,7 @@ export default () => {
       endDate,
       startDate,
     } = state;
+    setLoader(true)
     FetchWithFilters(
       {
         ADD_DATE: { from: startDate, to: endDate },
@@ -38,9 +42,11 @@ export default () => {
         PAGE_NUMBER: Number(PAGE_NUMBER),
       },
       (err: any, data: IResult<IContentDoc>) => {
+        setLoader(false)
         if (err) console.log("Error occured", err);
         else {
-          console.log("here", data);
+          console.log("here", data.results)
+          setDisplayData(data.results.slice((PAGE_NUMBER - 1)*50, 50))
           setResponseData(data.results);
         }
         return null;
@@ -63,6 +69,10 @@ export default () => {
       exportType: exportFromJSON.types.xls,
     });
   }
+
+  useEffect(() => {
+    setDisplayData(responseData.slice((PAGE_NUMBER - 1) * 50, (PAGE_NUMBER + 1) * 50))
+  }, [PAGE_NUMBER, setDisplayData])
 
   return (
     <body>
@@ -146,13 +156,13 @@ export default () => {
             <tr>
               {rows.map((item) => (
                 <td>
-                  <strong>{item}</strong>
+                  <strong>{String(item).replace("_", " ")}</strong>
                 </td>
               ))}
             </tr>
           </thead>
           <tbody>
-            {responseData.map((item) => (
+            {displayData.map((item) => (
               <tr>
                 {Object.values(item).map((itemName) => (
                   <td>{itemName}</td>
@@ -163,7 +173,13 @@ export default () => {
         </table>
       </div>
       <div className="paginationButtons">
-        <button>Previous</button> <button>Next</button>
+        <button
+          onClick={() => setPageNumber(PAGE_NUMBER - 1)}
+          disabled={PAGE_NUMBER === 1}
+        >Previous</button>
+        <button
+          onClick={() => setPageNumber(PAGE_NUMBER + 1)}
+        >Next</button>
       </div>
     </body>
   );
