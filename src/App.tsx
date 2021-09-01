@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, FormControl, FormGroup, Row, Table } from "react-bootstrap";
-import { rows, data, SSD } from "./data";
+import { rows } from "./data";
 import { FetchWithFilters, IContentDoc } from "./actions";
 import { IResult } from "./constants/interfaces";
 import exportFromJSON from "export-from-json";
@@ -48,6 +47,7 @@ export default () => {
           console.log("here", data.results)
           setDisplayData(data.results.slice((PAGE_NUMBER - 1)*50, 50))
           setResponseData(data.results);
+          setPageNumber(1);
         }
         return null;
       }
