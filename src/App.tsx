@@ -3,6 +3,7 @@ import { rows } from "./data";
 import { FetchWithFilters, IContentDoc } from "./actions";
 import { IResult } from "./constants/interfaces";
 import exportFromJSON from "export-from-json";
+import { Spinner } from "react-bootstrap"
 
 export default () => {
   const [state, setState] = useState({
@@ -15,6 +16,7 @@ export default () => {
     CARRIER_OPERATION: "",
   });
   const [PAGE_NUMBER, setPageNumber] = useState(1);
+  const [MAX_PAGE_NUMBER, setMaxPageNumber] = useState(1);
   const [responseData, setResponseData] = useState<IContentDoc[]>([]);
   const [displayData, setDisplayData] = useState<IContentDoc[]>([]);
   const [loader, setLoader] = useState<boolean>(false);
@@ -44,9 +46,9 @@ export default () => {
         setLoader(false)
         if (err) console.log("Error occured", err);
         else {
-          console.log("here", data.results)
           setDisplayData(data.results.slice((PAGE_NUMBER - 1)*50, 50))
           setResponseData(data.results);
+          setMaxPageNumber(Math.ceil(data.results.length / 50))
           setPageNumber(1);
         }
         return null;
@@ -142,12 +144,15 @@ export default () => {
       <hr />
       <div className="filterButtons">
         <div>
-          <button onClick={handleSubmit}>Search</button>
+          {loader? <Spinner animation="grow" /> : <button onClick={handleSubmit}>Search</button>}
         </div>
         <div>
           <button onClick={exlHandler}>Export to Excel</button>
           <button onClick={csvHandler}>Export to CSV</button>
         </div>
+      </div>
+      <div className="filterButtons">
+        <p>Showing Page {PAGE_NUMBER} of {MAX_PAGE_NUMBER}</p>
       </div>
 
       <div className="results">
@@ -176,9 +181,12 @@ export default () => {
         <button
           onClick={() => setPageNumber(PAGE_NUMBER - 1)}
           disabled={PAGE_NUMBER === 1}
+          style={{ color: PAGE_NUMBER === 1? 'gray' : 'white' }}
         >Previous</button>
         <button
           onClick={() => setPageNumber(PAGE_NUMBER + 1)}
+          disabled={PAGE_NUMBER === MAX_PAGE_NUMBER}
+          style={{ color: PAGE_NUMBER === MAX_PAGE_NUMBER? 'gray' : 'white' }}
         >Next</button>
       </div>
     </body>
